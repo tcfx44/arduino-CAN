@@ -28,7 +28,7 @@ CANControllerClass::~CANControllerClass()
 {
 }
 
-int CANControllerClass::begin(long /*baudRate*/)
+int CANControllerClass::begin(long baudRate)
 {
   _packetBegun = false;
   _txId = -1;
@@ -41,6 +41,7 @@ int CANControllerClass::begin(long /*baudRate*/)
   _rxDlc = 0;
   _rxLength = 0;
   _rxIndex = 0;
+  _baudrate = baudRate;
 
   return 1;
 }

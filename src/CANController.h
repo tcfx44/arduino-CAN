@@ -65,6 +65,7 @@ protected:
   int _rxDlc;
   int _rxLength;
   int _rxIndex;
+  long _baudrate;
   uint8_t _rxData[8];
 };
 
