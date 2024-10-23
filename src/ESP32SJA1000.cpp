@@ -167,7 +167,7 @@ int ESP32SJA1000Class::endPacket()
   if (!CANControllerClass::endPacket()) {
     return 0;
   }
-  const uint16_t TIMEOUTVALUE = 500;
+  const uint16_t TIMEOUTVALUE = 2500;
   uint16_t uiTimeOut = 0;
 
   // wait for TX buffer to free
@@ -175,8 +175,10 @@ int ESP32SJA1000Class::endPacket()
     yield();
     uiTimeOut++;
   }
-  if(uiTimeOut == TIMEOUTVALUE) {  
-    begin(_baudrate);
+  if(uiTimeOut == TIMEOUTVALUE) {
+    // the lines below seem to do something in the CAN controller, allowing it to resume without reset 
+    sleep();
+    wakeup();
     return -1; /* get tx buff time out */
   }
   uiTimeOut = 0;
@@ -220,8 +222,10 @@ int ESP32SJA1000Class::endPacket()
     yield();
     uiTimeOut++;
   }
-    if(uiTimeOut == TIMEOUTVALUE) {  
-    begin(_baudrate);
+  if(uiTimeOut == TIMEOUTVALUE) {  
+    // the lines below seem to do something in the CAN controller, allowing it to resume without reset
+    sleep();
+    wakeup();
     return -2; /* send msg time out */
   }
 
